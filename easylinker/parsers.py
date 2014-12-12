@@ -1,10 +1,11 @@
 #-*- coding: utf-8 -*-
-from __future__ import unicode_literals
-from __future__ import print_function
+#from __future__ import unicode_literals
+#from __future__ import print_function
 
 from jinja2 import Template
 import re
-
+from config import PREDEFINED_VARIABLE_TABLE
+from links import Link
 
 class ParserException(Exception):
     pass
@@ -49,4 +50,23 @@ class LineParser(object):
         if not dst:
             raise ParserException('Empty dst : {}'.format(line))
 
+        assert type(src) == unicode
+        assert type(dst) == unicode
         return src, dst
+
+def run(filename):
+    with open(filename, 'rb') as f:
+        content = f.read()
+        content = to_unicode(content)
+        assert type(content) == unicode
+
+    var_converter = VariableConverter(PREDEFINED_VARIABLE_TABLE)
+    content = var_converter.run(content)
+
+    line_list = content.splitlines()
+
+    line_parser = LineParser()
+    for line in line_list:
+        src, dst = line_parser.parse(line)
+        link = Link(src, dst)
+        link.create()
