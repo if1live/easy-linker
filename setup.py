@@ -43,7 +43,7 @@ setup(
     package_data={'': ['LICENSE', ]},
     include_package_data=True,
     install_requires=requires,
-    tests_require=tests_require,
+    tests_require=tests_requires,
     keywords=['hardlink'],
     classifiers=[
         'Development Status :: 4 - Beta',
