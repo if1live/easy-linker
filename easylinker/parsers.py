@@ -5,7 +5,7 @@
 from jinja2 import Template
 import re
 from config import PREDEFINED_VARIABLE_TABLE
-from links import Link
+from links import Link, LinkException
 
 class ParserException(Exception):
     pass
@@ -78,4 +78,7 @@ def run(filename):
         if not success:
             continue
         link = Link(src, dst)
-        link.create()
+        try:
+            link.create()
+        except LinkException as e:
+            print(e.message)
