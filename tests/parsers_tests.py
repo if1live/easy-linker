@@ -28,9 +28,24 @@ class LineParserTest(unittest.TestCase):
         ]
         line_parser = parsers.LineParser()
         for line in line_list:
-            src, dst = line_parser.parse(line)
+            success, src, dst = line_parser.parse(line)
+            self.assertEqual(True, success)
             self.assertEqual('a', src)
             self.assertEqual('b', dst)
+
+    def test_comment(self):
+        line_parser = parsers.LineParser()
+        success, src, dst = line_parser.parse('# this is comment')
+        self.assertEqual(False, success)
+        self.assertEqual(None, src)
+        self.assertEqual(None, dst)
+
+    def test_empty_line(self):
+        line_parser = parsers.LineParser()
+        success, src, dst = line_parser.parse('         ')
+        self.assertEqual(False, success)
+        self.assertEqual(None, src)
+        self.assertEqual(None, dst)
 
     def test_not_valid(self):
         line_parser = parsers.LineParser()
