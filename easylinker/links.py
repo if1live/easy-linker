@@ -14,9 +14,12 @@ class Link(object):
         self.src = src
         self.dst = dst
 
+    def pathname_to_valid_pathname(self, pathname):
+        return pathname.replace('/', os.path.sep).replace('\\', os.path.sep)
+
     def create(self):
-        src = self.src
-        dst = self.dst
+        src = self.pathname_to_valid_pathname(self.src)
+        dst = self.pathname_to_valid_pathname(self.dst)
 
         if os.path.exists(dst):
             msg = "Destination({}) is already exist.".format(dst)
@@ -26,15 +29,36 @@ class Link(object):
             msg = "Source({}) is not exist.".format(src)
             raise LinkException(msg)
 
+        if os.path.isdir(src):
+            self._process_directory(src, dst)
+        else:
+            self._process_file(src, dst)
+        return True
+
+    def _process_directory(self, src, dst):
+        parent_dir = os.path.split(dst)[0]
+        try:
+            os.makedirs(parent_dir)
+        except OSError:
+            pass
+
         if os.name == 'nt':
-            if os.path.isdir(src):
-                self._windows_directory_link(src, dst)
-            else:
-                self._windows_file_link(src, dst)
+            self._windows_directory_link(src, dst)
         else:
             self._unix_link(src, dst)
 
-        return True
+    def _process_file(self, src, dst):
+        parent_dir = os.path.split(dst)[0]
+        try:
+            os.makedirs(parent_dir)
+        except OSError:
+            pass
+
+
+        if os.name == 'nt':
+            self._windows_file_link(src, dst)
+        else:
+            self._unix_link(src, dst)
 
     def _unix_link(self, src, dst):
         return os.symlink(src, dst)
