@@ -69,8 +69,15 @@ class Link_directory_link_Test(unittest.TestCase):
         self.assertEqual(True, os.path.isdir(dst))
 
         # tear down fixture
-        os.removedirs(src)
-        os.removedirs(dst)
+        try:
+            os.removedirs(src)
+        except OSError:
+            pass
+        try:
+            os.removedirs(dst)
+        except OSError:
+            pass
+
         self.assertEqual(False, os.path.exists(src))
         self.assertEqual(False, os.path.exists(dst))
 
