@@ -5,19 +5,12 @@ from __future__ import print_function
 
 from links import Link
 
-def main():
-    '''
-    src_file = 'c:\\devel\\orig.txt'
-    src_dir = 'c:\\devel\\orig-dir'
-
-    dst_file = 'c:\\devel\\dst.txt'
-    dst_dir = 'c:\\devel\\dst-dir'
-
-    link_file = Link(src_file, dst_file)
-    link_dir = Link(src_dir, dst_dir)
-    link_file()
-    link_dir()
-    '''
-
-if __name__ == '__main__':
-    main()
+__title__ = 'easylinker'
+__version__ = '0.0.1'
+__author__ = 'libsora'
+__credits__ = ["libsora", ]
+__maintainer__ = "libsora"
+__email__ = "libsora25@gmail.com"
+__status__ = "Beta"
+__license__ = 'MIT'
+__copyright__ = 'Copyright 2014'
