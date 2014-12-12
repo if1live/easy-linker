@@ -37,7 +37,7 @@ class Link(object):
         return True
 
     def _unix_link(self, src, dst):
-        return os.link(src, dst)
+        return os.symlink(src, dst)
 
     def _windows_file_link(self, src, dst):
         from ntfsutils import hardlink
