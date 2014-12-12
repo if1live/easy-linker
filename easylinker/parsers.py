@@ -38,6 +38,13 @@ class LineParser(object):
     PROG = re.compile(r'(?P<src>.+)->(?P<dst>.+)')
 
     def parse(self, line):
+        line = line.strip()
+        if not line:
+            return False, None, None
+
+        if line[0] == '#':
+            return False, None, None
+
         m = self.PROG.match(line)
         if not m:
             raise ParserException('Not valid line : {}'.format(line))
@@ -52,7 +59,7 @@ class LineParser(object):
 
         assert type(src) == unicode
         assert type(dst) == unicode
-        return src, dst
+        return True, src, dst
 
 def run(filename):
     with open(filename, 'rb') as f:
@@ -67,6 +74,8 @@ def run(filename):
 
     line_parser = LineParser()
     for line in line_list:
-        src, dst = line_parser.parse(line)
+        success, src, dst = line_parser.parse(line)
+        if not success:
+            continue
         link = Link(src, dst)
         link.create()
