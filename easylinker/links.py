@@ -11,7 +11,7 @@ class LinkException(Exception):
 
 class Link(object):
     def __init__(self, src, dst):
-        self.src = src
+        self.src = os.path.join(os.getcwd(), src)
         self.dst = dst
 
     def pathname_to_valid_pathname(self, pathname):
