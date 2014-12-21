@@ -5,25 +5,6 @@ from __future__ import print_function
 
 import os
 
-
-def symlink(source, link_name):
-    """
-    http://stackoverflow.com/questions/6260149/os-symlink-support-in-windows
-    """
-    import os
-    os_symlink = getattr(os, "symlink", None)
-    if callable(os_symlink):
-        os_symlink(source, link_name)
-    else:
-        import ctypes
-        csl = ctypes.windll.kernel32.CreateSymbolicLinkW
-        csl.argtypes = (ctypes.c_wchar_p, ctypes.c_wchar_p, ctypes.c_uint32)
-        csl.restype = ctypes.c_ubyte
-        flags = 1 if os.path.isdir(source) else 0
-        if csl(link_name, source, flags) == 0:
-            raise ctypes.WinError()
-
-
 class LinkException(Exception):
     pass
 
@@ -81,7 +62,8 @@ class Link(object):
         return os.symlink(src, dst)
 
     def _windows_file_link(self, src, dst):
-        symlink(src, dst)
+        from ntfsutils import symboliclink
+        return symboliclink.create(src, dst)
 
     def _windows_directory_link(self, src, dst):
         from ntfsutils import junction

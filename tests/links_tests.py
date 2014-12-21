@@ -40,8 +40,11 @@ class Link_file_link_Test(unittest.TestCase):
         self.assertEqual(True, os.path.exists(dst))
         self.assertEqual(True, os.path.isfile(src))
         self.assertEqual(True, os.path.isfile(dst))
-        self.assertEqual(True, os.path.getsize(src) > 0)
-        self.assertEqual(os.path.getsize(src), os.path.getsize(dst))
+
+        with open(src, 'rb') as f:
+            src_content = f.read()
+        with open(dst, 'rb') as f:
+            self.assertEqual(src_content, f.read())
 
         # tear down fixture
         os.unlink(src)
