@@ -19,7 +19,7 @@ packages = [
 ]
 
 requires = [
-    'git+https://github.com/if1live/ntfs.git',
+    'https://github.com/if1live/ntfs.git#maste',
     'jinja2>=2.7.3',
 ]
 
