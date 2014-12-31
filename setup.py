@@ -18,8 +18,10 @@ packages = [
     'easylinker',
 ]
 
+dependency_links = [
+    'git+https://github.com/if1live/ntfs.git#egg=master',
+]
 requires = [
-    'https://github.com/if1live/ntfs.git#maste',
     'jinja2>=2.7.3',
 ]
 
@@ -44,6 +46,7 @@ setup(
     include_package_data=True,
     install_requires=requires,
     tests_require=tests_requires,
+    dependency_links=dependency_links,
     keywords=['hardlink'],
     classifiers=[
         'Development Status :: 4 - Beta',
