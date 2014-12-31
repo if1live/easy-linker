@@ -19,7 +19,7 @@ packages = [
 ]
 
 dependency_links = [
-    'git+https://github.com/if1live/ntfs.git#egg=master',
+    'github.com/if1live/ntfs/tarball/master#egg=0.1.3',
 ]
 requires = [
     'jinja2>=2.7.3',
