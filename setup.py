@@ -19,7 +19,7 @@ packages = [
 ]
 
 requires = [
-    'ntfsutils>=0.1.3',
+    'git+https://github.com/if1live/ntfs.git',
     'jinja2>=2.7.3',
 ]
 
