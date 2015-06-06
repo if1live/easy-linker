@@ -28,24 +28,36 @@ class LineParserTest(unittest.TestCase):
         ]
         line_parser = parsers.LineParser()
         for line in line_list:
-            success, src, dst = line_parser.parse(line)
-            self.assertEqual(True, success)
-            self.assertEqual('a', src)
-            self.assertEqual('b', dst)
+            actual = line_parser.parse(line)
+            self.assertEqual(True, actual.success)
+            self.assertEqual('a', actual.src)
+            self.assertEqual('b', actual.dst)
+            self.assertEqual(None, actual.platform)
+
+    def test_platform(self):
+        line_parser = parsers.LineParser()
+        line = 'platform: a -> b'
+        actual = line_parser.parse(line)
+        self.assertEqual(True, actual.success)
+        self.assertEqual('a', actual.src)
+        self.assertEqual('b', actual.dst)
+        self.assertEqual('platform', actual.platform)
 
     def test_comment(self):
         line_parser = parsers.LineParser()
-        success, src, dst = line_parser.parse('# this is comment')
-        self.assertEqual(False, success)
-        self.assertEqual(None, src)
-        self.assertEqual(None, dst)
+        actual = line_parser.parse('# this is comment')
+        self.assertEqual(False, actual.success)
+        self.assertEqual(None, actual.src)
+        self.assertEqual(None, actual.dst)
+        self.assertEqual(None, actual.platform)
 
     def test_empty_line(self):
         line_parser = parsers.LineParser()
-        success, src, dst = line_parser.parse('         ')
-        self.assertEqual(False, success)
-        self.assertEqual(None, src)
-        self.assertEqual(None, dst)
+        actual = line_parser.parse('         ')
+        self.assertEqual(False, actual.success)
+        self.assertEqual(None, actual.src)
+        self.assertEqual(None, actual.dst)
+        self.assertEqual(None, actual.platform)
 
     def test_not_valid(self):
         line_parser = parsers.LineParser()
