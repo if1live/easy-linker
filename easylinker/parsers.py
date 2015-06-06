@@ -127,7 +127,7 @@ def run(filename):
 
     line_list = content.splitlines()
 
-    curr_platform == platform.system().lower()
+    curr_platform = platform.system().lower()
     line_parser = LineParser()
     for line in line_list:
         line_info = line_parser.parse(line)
