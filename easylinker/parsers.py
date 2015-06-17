@@ -46,19 +46,19 @@ class LineInfo(object):
         return self.platform == None
 
     def is_win(self):
-        if self.palatform == None:
+        if self.platform == None:
             return False
         WIN_PLATFORM_LIST = ['windows', 'win']
         return self.platform.lower() in WIN_PLATFORM_LIST
 
     def is_osx(self):
-        if self.palatform == None:
+        if self.platform == None:
             return False
         OSX_PLATFORM_LIST = ['darwin', 'osx']
         return self.platform.lower() in OSX_PLATFORM_LIST
 
     def is_linux(self):
-        if self.palatform == None:
+        if self.platform == None:
             return False
         LINUX_PLATFORM_LIST = ['linux']
         return self.platform.lower() in LINUX_PLATFORM_LIST
