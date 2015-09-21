@@ -4,8 +4,8 @@
 
 from jinja2 import Template
 import re
-from config import PREDEFINED_VARIABLE_TABLE
-from links import Link, LinkException
+from .config import PREDEFINED_VARIABLE_TABLE
+from .links import Link, LinkException
 import platform
 
 class ParserException(Exception):

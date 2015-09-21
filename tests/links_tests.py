@@ -22,7 +22,7 @@ class Link_file_link_Test(unittest.TestCase):
     def test_file(self):
         # setup fixture
         src_f = tempfile.NamedTemporaryFile(delete=False)
-        src_f.write('dummy data')
+        src_f.write("dummy data".encode("utf-8"))
         src_f.close()
         src = src_f.name
         dst = create_not_exist_filename()

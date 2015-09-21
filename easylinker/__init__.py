@@ -3,8 +3,8 @@
 from __future__ import unicode_literals
 from __future__ import print_function
 
-from links import Link
-from parsers import run, to_unicode
+from .links import Link
+from .parsers import run, to_unicode
 
 __title__ = 'easylinker'
 __version__ = '0.0.1'
