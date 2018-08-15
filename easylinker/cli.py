@@ -8,8 +8,8 @@ if sys.version_info[0] == 2:
     reload(sys)
     sys.setdefaultencoding('utf-8')
 
-import config
-import parsers
+from . import config
+from . import parsers
 
 def main():
     if len(sys.argv) == 2:

@@ -16,7 +16,7 @@ class VariableConverterTest(unittest.TestCase):
         converter = parsers.VariableConverter(self.VAR_TABLE)
         actual = converter.run(template)
         expected = "foo is bar"
-        self.assertEqual(actual, expected)
+        assert actual == expected
 
 
 class LineParserTest(unittest.TestCase):
@@ -29,35 +29,23 @@ class LineParserTest(unittest.TestCase):
         line_parser = parsers.LineParser()
         for line in line_list:
             actual = line_parser.parse(line)
-            self.assertEqual(True, actual.success)
-            self.assertEqual('a', actual.src)
-            self.assertEqual('b', actual.dst)
-            self.assertEqual(None, actual.platform)
+            assert actual == parsers.LineInfo(True, 'a', 'b', None)
 
     def test_platform(self):
         line_parser = parsers.LineParser()
         line = 'platform: a -> b'
         actual = line_parser.parse(line)
-        self.assertEqual(True, actual.success)
-        self.assertEqual('a', actual.src)
-        self.assertEqual('b', actual.dst)
-        self.assertEqual('platform', actual.platform)
+        assert actual == parsers.LineInfo(True, 'a', 'b', 'platform')
 
     def test_comment(self):
         line_parser = parsers.LineParser()
         actual = line_parser.parse('# this is comment')
-        self.assertEqual(False, actual.success)
-        self.assertEqual(None, actual.src)
-        self.assertEqual(None, actual.dst)
-        self.assertEqual(None, actual.platform)
+        assert actual == parsers.LineInfo(False, None, None, None)
 
     def test_empty_line(self):
         line_parser = parsers.LineParser()
         actual = line_parser.parse('         ')
-        self.assertEqual(False, actual.success)
-        self.assertEqual(None, actual.src)
-        self.assertEqual(None, actual.dst)
-        self.assertEqual(None, actual.platform)
+        assert actual == parsers.LineInfo(False, None, None, None)
 
     def test_not_valid(self):
         line_parser = parsers.LineParser()

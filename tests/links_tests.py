@@ -27,30 +27,30 @@ class Link_file_link_Test(unittest.TestCase):
         src = src_f.name
         dst = create_not_exist_filename()
 
-        self.assertEqual(True, os.path.exists(src))
-        self.assertEqual(False, os.path.exists(dst))
-        self.assertEqual(True, os.path.isfile(src))
+        assert True == os.path.exists(src)
+        assert False == os.path.exists(dst)
+        assert True == os.path.isfile(src)
 
         # run logic
         link = links.Link(src, dst)
         link.create()
 
         # assert
-        self.assertEqual(True, os.path.exists(src))
-        self.assertEqual(True, os.path.exists(dst))
-        self.assertEqual(True, os.path.isfile(src))
-        self.assertEqual(True, os.path.isfile(dst))
+        assert True == os.path.exists(src)
+        assert True == os.path.exists(dst)
+        assert True == os.path.isfile(src)
+        assert True == os.path.isfile(dst)
 
         with open(src, 'rb') as f:
             src_content = f.read()
         with open(dst, 'rb') as f:
-            self.assertEqual(src_content, f.read())
+            assert src_content == f.read()
 
         # tear down fixture
         os.unlink(src)
         os.unlink(dst)
-        self.assertEqual(False, os.path.exists(src))
-        self.assertEqual(False, os.path.exists(dst))
+        assert False == os.path.exists(src)
+        assert False == os.path.exists(dst)
 
 
 class Link_directory_link_Test(unittest.TestCase):
@@ -58,18 +58,18 @@ class Link_directory_link_Test(unittest.TestCase):
         # set up fixture
         src = tempfile.mkdtemp()
         dst = src + '-test'
-        self.assertEqual(True, os.path.exists(src))
-        self.assertEqual(False, os.path.exists(dst))
-        self.assertEqual(True, os.path.isdir(src))
+        assert True == os.path.exists(src)
+        assert False == os.path.exists(dst)
+        assert True == os.path.isdir(src)
 
         link = links.Link(src, dst)
         link.create()
 
         # assert
-        self.assertEqual(True, os.path.exists(src))
-        self.assertEqual(True, os.path.exists(dst))
-        self.assertEqual(True, os.path.isdir(src))
-        self.assertEqual(True, os.path.isdir(dst))
+        assert True == os.path.exists(src)
+        assert True == os.path.exists(dst)
+        assert True == os.path.isdir(src)
+        assert True == os.path.isdir(dst)
 
         # tear down fixture
         try:
@@ -81,16 +81,16 @@ class Link_directory_link_Test(unittest.TestCase):
         except OSError:
             pass
 
-        self.assertEqual(False, os.path.exists(src))
-        self.assertEqual(False, os.path.exists(dst))
+        assert False == os.path.exists(src)
+        assert False == os.path.exists(dst)
 
 
 class Link_src_not_exist_Test(unittest.TestCase):
     def test_src_not_exist(self):
         src = create_not_exist_filename()
         dst = create_not_exist_filename()
-        self.assertEqual(False, os.path.exists(src))
-        self.assertEqual(False, os.path.exists(dst))
+        assert False == os.path.exists(src)
+        assert False == os.path.exists(dst)
 
         link = links.Link(src, dst)
         with self.assertRaises(links.LinkException) as cm:

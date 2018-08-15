@@ -1,0 +1,14 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"jinja2" = "*"
+ntfs = {editable = true, git = "https://github.com/if1live/ntfs.git"}
+
+[dev-packages]
+nose = "*"
+
+[requires]
+python_version = "3.7"

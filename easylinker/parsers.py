@@ -66,6 +66,15 @@ class LineInfo(object):
     @classmethod
     def invalid_line(cls):
         return LineInfo(False, None, None, None)
+        
+    def __eq__(self, o):
+        return (
+            self.success == o.success
+            and self.src == o.src
+            and self.dst == o.dst
+            and self.platform == o.platform
+        )
+    
 
 class LineParser(object):
     SIMPLE_PROG = re.compile(r'(?P<src>.+)->(?P<dst>.+)')
