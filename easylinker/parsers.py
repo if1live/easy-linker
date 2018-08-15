@@ -4,6 +4,7 @@
 
 from jinja2 import Template
 import re
+import sys
 from .config import PREDEFINED_VARIABLE_TABLE
 from .links import Link, LinkException
 import platform
@@ -13,6 +14,12 @@ class ParserException(Exception):
 
 
 def to_unicode(val):
+    if sys.version_info[0] == 2:
+        return to_unicode_python2(val)
+    else:
+        return val
+
+def to_unicode_python2(val):
     if type(val) == unicode:
         return val
 
@@ -130,13 +137,27 @@ class LineParser(object):
             raise ParserException('Empty dst : [{}]'.format(line))
 
         return line_info
+        
+def read_textfile(filename):
+    if sys.version_info[0] >= 3:
+        return read_textfile_python3(filename)
+    else:
+        return read_textfile_python2(filename)
+    
+def read_textfile_python3(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
+        content = f.read()
+        return content
 
-def run(filename):
-    with open(filename, 'rb') as f:
+def read_textfile_python2(filename):
+    with open(filename, 'r') as f:
         content = f.read()
         content = to_unicode(content)
         assert type(content) == unicode
+        return content
 
+def run(filename):
+    content = read_textfile(filename)
     var_converter = VariableConverter(PREDEFINED_VARIABLE_TABLE)
     content = var_converter.run(content)
 
