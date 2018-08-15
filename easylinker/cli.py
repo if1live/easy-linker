@@ -4,8 +4,9 @@ from __future__ import unicode_literals
 from __future__ import print_function
 
 import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+if sys.version_info[0] == 2:
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
 
 import config
 import parsers
